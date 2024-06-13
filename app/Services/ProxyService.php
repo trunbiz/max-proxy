@@ -14,7 +14,6 @@ class ProxyService
 
     public function determineProxy($request, $port = null)
     {
-        dd($request->method());
         $proxyInfo = Proxy::where('port_access', $port)->first();
 
         if (empty($proxyInfo))
@@ -32,6 +31,7 @@ class ProxyService
         ]);
 
         // Trả về kết quả từ proxy cho client
-        return response($response->getBody()->getContents(), $response->getStatusCode(), $response->getHeaders());
+        return response($response->getBody()->getContents(), $response->getStatusCode())
+            ->withHeaders($response->getHeaders());
     }
 }

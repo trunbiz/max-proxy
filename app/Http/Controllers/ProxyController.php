@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proxy;
 use App\Services\ProxyService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProxyController extends Controller
 {
@@ -40,6 +41,11 @@ class ProxyController extends Controller
     public function determineProxy(Request $request)
     {
         $port = $_SERVER['LARAVEL_PORT'] ?? null;
+
+        Log::info('log request', [
+            $request->all(),
+            $port
+        ]);
 
         return $this->proxyService->determineProxy($request, $port);
     }
