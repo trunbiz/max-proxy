@@ -14,14 +14,14 @@ class ProxyService
 
     public function determineProxy($request, $port = null)
     {
-        $proxyInfo = Proxy::where('port_access', $port)->first();
-
-        if (empty($proxyInfo))
-            return false;
+//        $proxyInfo = Proxy::where('port_access', $port)->first();
+//
+//        if (empty($proxyInfo))
+//            return false;
 
         // Tạo client Guzzle với proxy được cấu hình
         $client = new Client([
-            'proxy' => $proxyInfo->ip,
+            'proxy' => '103.116.9.164:30000',
         ]);
 
         // Gửi yêu cầu từ client tới proxy
