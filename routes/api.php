@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'proxies'], function (){
    Route::get('/', [\App\Http\Controllers\ProxyController::class, 'index']);
+   Route::get('detail', [\App\Http\Controllers\ProxyController::class, 'detail']);
 });
