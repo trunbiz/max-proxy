@@ -20,30 +20,25 @@ class ProxyController extends Controller
     public function index(Request $request)
     {
 //        $data['items'] = Proxy::orderBy('id', 'DESC')->get();
+//        $data = [
+//            ['30001', '3.90.109.104:10000', '*.24h.com *.tiktok.com, '],
+//            ['30002', '3.90.109.104:10000'],
+//            ['30003', '3.90.109.104:10000'],
+//            ['30004', '3.90.109.104:10000'],
+//            ['30005', '3.90.109.104:10000'],
+//        ];
+//        return returnApi(true, 'get proxy success', $data);
+    }
+
+    public function getDataProxy(Request $request)
+    {
+//        $data['items'] = Proxy::orderBy('id', 'DESC')->get();
         $data = [
-            ['30001', '3.90.109.104:10000'],
+            ['30001', '3.90.109.104:10000', '*.24h.com *.tiktok.com fb.com'],
             ['30002', '3.90.109.104:10000'],
             ['30003', '3.90.109.104:10000'],
             ['30004', '3.90.109.104:10000'],
             ['30005', '3.90.109.104:10000'],
-        ];
-        return returnApi(true, 'get proxy success', $data);
-    }
-
-    public function detail()
-    {
-        $data = [
-            '30001' => ['type' => 'INCLUDE', 'data' => [
-                '*.24h.com',
-                '*.tiktok.com',
-            ]],
-            '30002' => ['type' => 'EXCLUDE', 'data' => [
-                '*.24h.com',
-                '*.tiktok.com',
-            ]],
-            '30003' => [],
-            '30004' => [],
-            '30005' => []
         ];
         return returnApi(true, 'get proxy success', $data);
     }
