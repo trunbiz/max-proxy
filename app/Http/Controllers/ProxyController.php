@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proxy;
 use App\Services\ProxyService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ProxyController extends Controller
@@ -12,6 +13,7 @@ class ProxyController extends Controller
     //
 
     public $proxyService;
+    const IP_SERVER = '13.215.75.125';
     public function __construct()
     {
         $this->proxyService = new ProxyService();
@@ -19,27 +21,23 @@ class ProxyController extends Controller
 
     public function index(Request $request)
     {
-//        $data['items'] = Proxy::orderBy('id', 'DESC')->get();
-//        $data = [
-//            ['30001', '3.90.109.104:10000', '*.24h.com *.tiktok.com, '],
-//            ['30002', '3.90.109.104:10000'],
-//            ['30003', '3.90.109.104:10000'],
-//            ['30004', '3.90.109.104:10000'],
-//            ['30005', '3.90.109.104:10000'],
-//        ];
-//        return returnApi(true, 'get proxy success', $data);
+        $data['ipServer'] = self::IP_SERVER;
+        $data['proxys'] = Proxy::orderBy('id', 'DESC')->get();
+        return view('client.proxy', $data);
     }
 
     public function getDataProxy(Request $request)
     {
-//        $data['items'] = Proxy::orderBy('id', 'DESC')->get();
-        $data = [
-            ['30001', '3.90.109.104:10000', '*.24h.com *.tiktok.com fb.com'],
-            ['30002', '3.90.109.104:10001'],
-            ['30003', '3.90.109.104:10002'],
-            ['30004', '3.90.109.104:10003'],
-            ['30005', '3.90.109.104:10004'],
-        ];
+        $proxys = Proxy::orderBy('id', 'DESC')->get();
+        $data = [];
+        foreach ($proxys as $item)
+        {
+            $data[] = [
+                (string)$item->port_access,
+                $item->ip,
+                str_replace(',', ' ', $item->include)
+            ];
+        }
         return returnApi(true, 'get proxy success', $data);
     }
 
@@ -51,10 +49,26 @@ class ProxyController extends Controller
         if (empty($proxy))
             return back();
 
+        $port_access =  30000;
+        $proxyLast = Proxy::orderBy('id', 'DESC')->first();
+        if (!empty($proxyLast))
+            $port_access = $proxyLast->port_access + 1;
+
+
         Proxy::create([
-           'user_id' => 1,
+           'user_id' => Auth::user()->id,
             'ip' => $proxy,
+            'port_access' =>$port_access,
+            'include' =>  str_replace(' ', '', $request['includeUrl'])
         ]);
+        return back();
+    }
+
+    public function deleteProxy(Request $request)
+    {
+        $request = $request->all();
+        $id = $request['id'];
+        Proxy::destroy($id);
         return back();
     }
 

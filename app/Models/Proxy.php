@@ -12,5 +12,6 @@ class Proxy extends Model
       'user_id',
       'ip',
       'port_access',
+      'include',
     ];
 }

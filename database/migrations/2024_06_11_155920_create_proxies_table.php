@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->string('ip')->nullable();
             $table->integer('port_access')->nullable();
+            $table->longText('include')->nullable();
             $table->timestamps();
             $table->index('user_id');
         });
