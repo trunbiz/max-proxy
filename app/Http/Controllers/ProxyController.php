@@ -35,7 +35,7 @@ class ProxyController extends Controller
             $data[] = [
                 (string)$item->port_access,
                 $item->ip,
-                str_replace(',', ' ', $item->include)
+                str_replace(',', ' ', !empty($item->include) ? $item->include : '')
             ];
         }
         return returnApi(true, 'get proxy success', $data);
@@ -59,7 +59,7 @@ class ProxyController extends Controller
            'user_id' => Auth::user()->id,
             'ip' => $proxy,
             'port_access' =>$port_access,
-            'include' =>  str_replace(' ', '', $request['includeUrl'])
+            'include' =>  str_replace(' ', '', $request['includeUrl'] ?? '')
         ]);
         return back();
     }
