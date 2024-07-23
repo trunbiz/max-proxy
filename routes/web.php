@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::any('/{any}', [\App\Http\Controllers\ProxyController::class, 'determineProxy'])->name('proxies.determineProxy');
+//Route::any('/{any}', [\App\Http\Controllers\ProxyController::class, 'determineProxy'])->name('proxies.determineProxy');
 
 Route::group(['prefix' => 'login'], function (){
     Route::get('/', [\App\Http\Controllers\UserController::class, 'showLogin']);
