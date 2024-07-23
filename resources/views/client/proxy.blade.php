@@ -26,6 +26,7 @@
             </div>
         </div>
     </form>
+    <b class="text-danger"> MyIP: {{$ipServer}}</b>
     <table class="table">
         <thead>
         <tr>
